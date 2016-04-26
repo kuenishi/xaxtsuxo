@@ -7,6 +7,6 @@ public class ぁっぉTest {
 
     @Test
     public void getNameTest() {
-	assertEquals("ぁっぉ", ぁっぉ.getName());
+        assertEquals("ぁっぉ", ぁっぉ.getName());
     }
 }
