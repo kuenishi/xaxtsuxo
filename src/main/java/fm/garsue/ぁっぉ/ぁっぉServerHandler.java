@@ -9,8 +9,11 @@ import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.*;
@@ -26,10 +29,68 @@ public class ぁっぉServerHandler extends SimpleChannelInboundHandler<Object> 
      * Buffer that stores the response content
      */
     private final StringBuilder buf = new StringBuilder();
+    private final Random r = new Random();
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
         ctx.flush();
+    }
+
+
+    void handleHeader(ChannelHandlerContext ctx, HttpRequest request) {
+
+        buf.setLength(0);
+        String decodedResource = null;
+        try {
+            decodedResource = java.net.URLDecoder.decode(request.getUri(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            buf.append(e.toString());
+        }
+
+        if (decodedResource.equals("/ぁっぉ")) {
+            buf.append("ぁっぉ〜\r\n");
+            return;
+        }
+        else if (decodedResource.equals("/ぁっぉ〜")) {
+            if( r.nextInt(10) == 7 ) {
+                buf.append("ぁっぉぁっぉうるさいぞｗｗｗ\r\n");
+            } else {
+                buf.append("ぁっぉ〜\r\n");
+            }
+            return;
+        }
+
+        buf.append("WELCOME TO THE WILD WILD WEB SERVER\r\n");
+        buf.append("===================================\r\n");
+
+        buf.append("VERSION: ").append(request.getProtocolVersion()).append("\r\n");
+        buf.append("HOSTNAME: ").append(HttpHeaders.getHost(request, "unknown")).append("\r\n");
+        buf.append("REQUEST_URI: ").append(request.getUri()).append("\r\n\r\n");
+
+        HttpHeaders headers = request.headers();
+        if (!headers.isEmpty()) {
+            for (Map.Entry<String, String> h : headers) {
+                String key = h.getKey();
+                String value = h.getValue();
+                buf.append("HEADER: ").append(key).append(" = ").append(value).append("\r\n");
+            }
+            buf.append("\r\n");
+        }
+
+        QueryStringDecoder queryStringDecoder = new QueryStringDecoder(request.getUri());
+        Map<String, List<String>> params = queryStringDecoder.parameters();
+        if (!params.isEmpty()) {
+            for (Map.Entry<String, List<String>> p : params.entrySet()) {
+                String key = p.getKey();
+                List<String> vals = p.getValue();
+                for (String val : vals) {
+                    buf.append("PARAM: ").append(key).append(" = ").append(val).append("\r\n");
+                }
+            }
+            buf.append("\r\n");
+        }
+
+        appendDecoderResult(buf, request);
     }
 
     @Override
@@ -41,38 +102,7 @@ public class ぁっぉServerHandler extends SimpleChannelInboundHandler<Object> 
                 send100Continue(ctx);
             }
 
-            buf.setLength(0);
-            buf.append("WELCOME TO THE WILD WILD WEB SERVER\r\n");
-            buf.append("===================================\r\n");
-
-            buf.append("VERSION: ").append(request.getProtocolVersion()).append("\r\n");
-            buf.append("HOSTNAME: ").append(HttpHeaders.getHost(request, "unknown")).append("\r\n");
-            buf.append("REQUEST_URI: ").append(request.getUri()).append("\r\n\r\n");
-
-            HttpHeaders headers = request.headers();
-            if (!headers.isEmpty()) {
-                for (Map.Entry<String, String> h : headers) {
-                    String key = h.getKey();
-                    String value = h.getValue();
-                    buf.append("HEADER: ").append(key).append(" = ").append(value).append("\r\n");
-                }
-                buf.append("\r\n");
-            }
-
-            QueryStringDecoder queryStringDecoder = new QueryStringDecoder(request.getUri());
-            Map<String, List<String>> params = queryStringDecoder.parameters();
-            if (!params.isEmpty()) {
-                for (Map.Entry<String, List<String>> p : params.entrySet()) {
-                    String key = p.getKey();
-                    List<String> vals = p.getValue();
-                    for (String val : vals) {
-                        buf.append("PARAM: ").append(key).append(" = ").append(val).append("\r\n");
-                    }
-                }
-                buf.append("\r\n");
-            }
-
-            appendDecoderResult(buf, request);
+            handleHeader(ctx, request);
         }
 
         if (msg instanceof HttpContent) {
@@ -87,7 +117,7 @@ public class ぁっぉServerHandler extends SimpleChannelInboundHandler<Object> 
             }
 
             if (msg instanceof LastHttpContent) {
-                buf.append("END OF CONTENT\r\n");
+                //buf.append("END OF CONTENT\r\n");
 
                 LastHttpContent trailer = (LastHttpContent) msg;
                 if (!trailer.trailingHeaders().isEmpty()) {
