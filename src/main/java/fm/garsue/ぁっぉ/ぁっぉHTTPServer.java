@@ -16,10 +16,14 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
  */
 public class ぁっぉHTTPServer {
 
-    static final boolean SSL = System.getProperty("ssl") != null;
-    static final int PORT = Integer.parseInt(System.getProperty("port", SSL ? "8443" : "8080"));
+    private boolean SSL;
+    private int PORT;
 
-    public static void run() throws Exception {
+    public ぁっぉHTTPServer(boolean ssl, int port) {
+        SSL = ssl; //System.getProperty("ssl") != null;
+        PORT = port; //Integer.parseInt(System.getProperty("port", SSL ? "8443" : "8080"));
+    }
+    public void run() throws Exception {
 
         // Configure SSL.
         final SslContext sslCtx;
