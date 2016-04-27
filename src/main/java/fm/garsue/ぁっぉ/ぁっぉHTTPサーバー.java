@@ -23,7 +23,7 @@ public class ぁっぉHTTPサーバー {
         SSL = ssl; //System.getProperty("ssl") != null;
         PORT = port; //Integer.parseInt(System.getProperty("port", SSL ? "8443" : "8080"));
     }
-    public void run() throws Exception {
+    public void 走る() throws Exception {
 
         // Configure SSL.
         final SslContext sslCtx;

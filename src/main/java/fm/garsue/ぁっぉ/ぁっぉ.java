@@ -6,7 +6,7 @@ public final class ぁっぉ {
         ぁっぁっぉ.ぉゃっょ();
     }
 
-    public static String getName() {
+    public static String 名前() {
         return "ぁっぉ";
     }
 
@@ -15,6 +15,6 @@ public final class ぁっぉ {
         this.ぁつぁっ = new ぁっぉHTTPサーバー(false, 8080);
     }
     public void ぉゃっょ() throws Exception {
-        this.ぁつぁっ.run();
+        this.ぁつぁっ.走る();
     }
 }
