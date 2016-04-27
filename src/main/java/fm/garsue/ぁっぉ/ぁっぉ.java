@@ -10,9 +10,9 @@ public final class ぁっぉ {
         return "ぁっぉ";
     }
 
-    private ぁっぉHTTPServer ぁつぁっ = null;
+    private ぁっぉHTTPサーバー ぁつぁっ = null;
     public ぁっぉ(){
-        this.ぁつぁっ = new ぁっぉHTTPServer(false, 8080);
+        this.ぁつぁっ = new ぁっぉHTTPサーバー(false, 8080);
     }
     public void ぉゃっょ() throws Exception {
         this.ぁつぁっ.run();

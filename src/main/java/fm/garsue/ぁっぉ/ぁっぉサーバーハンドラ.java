@@ -23,7 +23,7 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 /**
  * Created by kuenishi on 4/27/16.
  */
-public class ぁっぉServerHandler extends SimpleChannelInboundHandler<Object> {
+public class ぁっぉサーバーハンドラ extends SimpleChannelInboundHandler<Object> {
     private HttpRequest request;
     /**
      * Buffer that stores the response content

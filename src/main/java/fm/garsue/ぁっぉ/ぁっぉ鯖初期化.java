@@ -10,10 +10,10 @@ import io.netty.handler.ssl.SslContext;
 /**
  * Created by kuenishi on 4/27/16.
  */
-public class ぁっぉServerInitializer extends ChannelInitializer<SocketChannel> {
+public class ぁっぉ鯖初期化 extends ChannelInitializer<SocketChannel> {
     private final SslContext sslCtx;
 
-    public ぁっぉServerInitializer(SslContext sslCtx) {
+    public ぁっぉ鯖初期化(SslContext sslCtx) {
         this.sslCtx = sslCtx;
     }
 
@@ -29,6 +29,6 @@ public class ぁっぉServerInitializer extends ChannelInitializer<SocketChannel
         p.addLast(new HttpResponseEncoder());
         // Remove the following line if you don't want automatic content compression.
         //p.addLast(new HttpContentCompressor());
-        p.addLast(new ぁっぉServerHandler());
+        p.addLast(new ぁっぉサーバーハンドラ());
     }
 }

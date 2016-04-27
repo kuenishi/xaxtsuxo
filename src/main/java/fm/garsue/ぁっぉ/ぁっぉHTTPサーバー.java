@@ -14,12 +14,12 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 /**
  * Created by kuenishi on 4/27/16.
  */
-public class ぁっぉHTTPServer {
+public class ぁっぉHTTPサーバー {
 
     private boolean SSL;
     private int PORT;
 
-    public ぁっぉHTTPServer(boolean ssl, int port) {
+    public ぁっぉHTTPサーバー(boolean ssl, int port) {
         SSL = ssl; //System.getProperty("ssl") != null;
         PORT = port; //Integer.parseInt(System.getProperty("port", SSL ? "8443" : "8080"));
     }
@@ -42,7 +42,7 @@ public class ぁっぉHTTPServer {
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new ぁっぉServerInitializer(sslCtx));
+                    .childHandler(new ぁっぉ鯖初期化(sslCtx));
 
             Channel ch = b.bind(PORT).sync().channel();
 
