@@ -1,11 +1,11 @@
 # ぁっぉ
 
-Needs JDK and Gradle.
+Needs JDK8+.
 
 ```sh
 $ git clone git://github.com/kuenishi/xaxtsuxo
 $ cd xaxtsuxo
-$ gradle run
+$ ./gradlew run
 ```
 
-And then open [localhost:8080](http://localhost:8080/ぁっぉ) with your browser.
+And then open [localhost:8080](http://localhost:8080/ぁっぉ) with your browser and have fun
